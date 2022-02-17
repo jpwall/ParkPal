@@ -1,0 +1,82 @@
+.App {
+	text-align: center;
+}
+
+.App-logo {
+	height: 40vmin;
+	pointer-events: none;
+}
+
+.App-header {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.App-link {
+	color: #61dafb;
+}
+
+.flexb {
+	display: flex;
+}
+
+.col {
+	flex-direction: column;
+}
+.search {
+	width: 100vw;
+	height: 20rem;
+	background-color: aquamarine;
+}
+.parkWeek {
+	width: 100vw;
+	height: 20rem;
+	background-color: bisque;
+}
+.bannerPic {
+	height: 13rem;
+	width: 100vw;
+	background-color: rgb(110, 52, 52);
+}
+.split {
+	justify-content: space-around;
+}
+.pictures {
+	text-align: center;
+	width: 100%;
+	height: 20rem;
+	background-color: cornsilk;
+}
+.specDeets {
+	text-align: center;
+	width: 100%;
+	height: 20rem;
+	background-color: coral;
+}
+.social {
+	width: 100vw;
+	height: 5rem;
+	background-color: darkolivegreen;
+}
+.searchDeets {
+	text-align: center;
+	width: 100vw;
+	height: 10rem;
+	background-color: antiquewhite;
+}
+.mapResult {
+	width: 100%;
+	height: 30rem;
+	background-color: aquamarine;
+}
+.listResult {
+	width: 100%;
+	height: 30rem;
+	background-color: burlywood;
+}
