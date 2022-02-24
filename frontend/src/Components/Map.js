@@ -1,35 +1,46 @@
 import "./Map.css";
 import "../Styles/BreakPoints.css";
+//following is CRITICAL for proper functioning of map
+import "mapbox-gl/dist/mapbox-gl.css";
 
 import React, { useState, useRef } from "react";
 //docs for map https://visgl.github.io/react-map-gl/
-//yt doc https://www.youtube.com/watch?v=3HYvbP2pQRA
-//acc https://account.mapbox.com/access-tokens/
-import ReactMapGl, { Marker } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { Map, Marker } from "react-map-gl";
 
-function Map() {
-	//setup map
+//sets use state variables of zoom lng & lat
+function ParkMap() {
 	const [viewport, setViewport] = useState({
-		lat: 47.655,
-		lng: -122.303,
-		width: "1000px",
-		height: "1000px",
+		longitude: -122.303,
+		latitude: 47.655,
 		zoom: 12,
 	});
 
-	const mapRef = useRef();
-
 	return (
-		<ReactMapGl
-			//the ... destructures viewport passing args individually
-			{...viewport}
+		<Map
+			// Sends decontructed viewport to set initial viewstate
+			initialViewState={{
+				...viewport,
+			}}
+			//stops users for zooming out too much
 			minZoom={9}
+			//stops users from zooming in too much
 			maxZoom={16}
+			//defualt map container
+			style={{ width: 500, height: 400 }}
 			mapboxAccessToken="pk.eyJ1IjoiY2Fubml6em8iLCJhIjoiY2t6eDQ5NnhwOGQ4MDJvbXpvdGNucTY5cSJ9.uuxFKeoMIOo-piRQ1yx3lw"
-			onViewportChange={(newviewport) => {
-				setViewport({ ...newviewport });
-			}}></ReactMapGl>
+			mapStyle="mapbox://styles/mapbox/streets-v9">
+			{/* First template marker */}
+			<Marker
+				longitude={-122.303}
+				latitude={47.655}
+				anchor="bottom"></Marker>
+			{/* Second template marker */}
+			<Marker
+				longitude={-122.403}
+				latitude={47.655}
+				anchor="bottom"></Marker>
+		</Map>
 	);
 }
-export default Map;
+
+export default ParkMap;
