@@ -35,19 +35,48 @@ def connect():
         print(db_version)
        
         cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
+    except (Exception, psql.DatabaseError) as error:
         print(error)
     finally:
         if conn is not None:
             conn.close()
             print('Database connection closed.')
 
+def parkOut(park):
+    return {
+        "pid": park[0],
+        "name": park[1],
+        "fid": park[2],
+        "lat": park[3],
+        "lon": park[4],
+        "hours": park[5],
+        "youth_only": park[6],
+        "lighting": park[7]
+    }
+
 app = Flask(__name__)
 
-@app.route('/test')
+@app.route('/')
 def healthcheck():
-    return 'Placeholder'
+    return 'The Backend is running as expected'
+
+@app.route('/parks')
+def getParks():
+    try:
+        params = config()
+        conn = psql.connect(**params)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM park')
+        parks = cur.fetchall()
+        conn.close()
+        ret = []
+        for park in parks:
+            ret.append(parkOut(park))
+        return str(ret)
+    except (Exception, psql.DatabaseError) as error:
+        print(error)
+        conn.close()
+        return 500
 
 if __name__ == '__main__':
-    connect()
     app.run()
