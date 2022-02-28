@@ -55,6 +55,13 @@ def parkOut(park):
         "lighting": park[7]
     }
 
+def featureOut(feature):
+    return {
+        "fid": feature[0],
+        "name": feature[1],
+        "image": feature[2]
+    }
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -80,6 +87,24 @@ def getParks():
         for park in ret:
             retarr.append(ret[str(park)])
         return json.dumps(retarr)
+    except (Exception, psql.DatabaseError) as error:
+        print(error)
+        conn.close()
+        return 500
+
+@app.route('/features')
+def getFeatures():
+    try:
+        params = config()
+        conn = psql.connect(**params)
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM feature')
+        features = cur.fetchall()
+        conn.close()
+        ret = []
+        for feature in features:
+            ret.append(featureOut(feature))
+        return json.dumps(ret)
     except (Exception, psql.DatabaseError) as error:
         print(error)
         conn.close()
