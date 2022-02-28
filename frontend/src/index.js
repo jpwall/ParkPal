@@ -9,6 +9,7 @@ import App from "./App";
 import ParkPage from "./ParkPage";
 import Search from "./Search";
 import SearchResult from "./SearchResult";
+import Login from "./Login"
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -19,6 +20,7 @@ ReactDOM.render(
 				<Route path="ParkPage" element={<ParkPage />} />
 				<Route path="/Search" element={<Search />} />
 				<Route path="/SearchResult" element={<SearchResult />} />
+				<Route path="/login" element={<Login />} />
 			</Routes>
 		</BrowserRouter>
 	</React.StrictMode>,

@@ -1,8 +1,14 @@
 from flask import Flask
+from flask import request
+from flask_cors import CORS, cross_origin
 import psycopg2 as psql
 import config
 import json
 from configparser import ConfigParser
+
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def config(filename='db.ini', section='parkpal'):
     parser = ConfigParser()
@@ -62,11 +68,21 @@ def featureOut(feature):
         "image": feature[2]
     }
 
-app = Flask(__name__)
-
 @app.route('/')
 def healthcheck():
     return 'The Backend is running as expected'
+
+@app.route('/auth_login', methods=['POST'])
+@cross_origin()
+def login():
+    request.form = json.loads(request.data)
+    return "success!"
+
+@app.route('/auth_register', methods=['POST'])
+@cross_origin()
+def register():
+    request.form = json.loads(request.data)
+    return "registered"
 
 @app.route('/parks')
 def getParks():

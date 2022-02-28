@@ -41,7 +41,7 @@ We should now see that there is a `user`, `feature`, and `park` table!
 
 Install all the packages
 ```
-pip install flask psycopg2 config
+pip install flask flask_cors psycopg2 config
 ```
 
 ## Data Integration
