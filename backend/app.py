@@ -1,6 +1,7 @@
 from flask import Flask
 import psycopg2 as psql
 import config
+import json
 from configparser import ConfigParser
 
 def config(filename='db.ini', section='parkpal'):
@@ -46,7 +47,7 @@ def parkOut(park):
     return {
         "pid": park[0],
         "name": park[1],
-        "fid": park[2],
+        "fids": [park[2]],
         "lat": park[3],
         "lon": park[4],
         "hours": park[5],
@@ -69,10 +70,16 @@ def getParks():
         cur.execute('SELECT * FROM park')
         parks = cur.fetchall()
         conn.close()
-        ret = []
+        ret = {}
         for park in parks:
-            ret.append(parkOut(park))
-        return str(ret)
+            if str(park[1]) in ret.keys():
+                ret[str(park[1])]["fids"].append(park[2])
+            else:
+                ret[str(park[1])] = parkOut(park)
+        retarr = []
+        for park in ret:
+            retarr.append(ret[str(park)])
+        return json.dumps(retarr)
     except (Exception, psql.DatabaseError) as error:
         print(error)
         conn.close()
