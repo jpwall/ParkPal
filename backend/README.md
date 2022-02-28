@@ -15,7 +15,12 @@ Next, start the PostgreSQL server:
 
 (Or equivalent command in Windows)
 
-Configure the server in a local shell:
+[NEW] Run the SQL init script:
+```
+psql -h 127.0.0.1 -f scripts/init.sql
+```
+
+OR, Configure the server in a local shell:
 ```
 psql
 =# CREATE USER parkpal WITH PASSWORD 'pass';
