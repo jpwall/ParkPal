@@ -25,14 +25,65 @@
 .flexb {
 	display: flex;
 }
-
+.button {
+	border: none;
+	height: 2.5rem;
+	width: 8rem;
+	color: white;
+}
 .col {
 	flex-direction: column;
+}
+.apart {
+	justify-content: space-between;
+	align-items: space-between;
+}
+.center {
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
 }
 .search {
 	width: 100vw;
 	height: 20rem;
 	background-color: aquamarine;
+	background: url(../ImagesIcons/kerryparkview.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.searchBar {
+	width: 25rem;
+	border: 1px solid white;
+	height: 2.5rem;
+	padding: 1rem;
+	background: white;
+	position: relative;
+}
+
+.searchType {
+	border: 1px solid white;
+	background: rgba(0, 0, 0, 0.6);
+	margin: 0.5rem 0rem;
+}
+.spacer {
+	padding: 0rem 0.5rem;
+}
+.search h1 {
+	color: white;
+	line-height: 0.25;
+}
+.search p {
+	font-style: italic;
+	color: white;
+}
+.enter {
+	position: fixed;
+	background: #0046ad;
+	border: none;
+	margin: 0.3rem -8.25rem;
+	height: 2rem;
 }
 .parkWeek {
 	width: 100vw;
@@ -42,10 +93,29 @@
 .bannerPic {
 	height: 13rem;
 	width: 100vw;
+	position: relative;
 	background-color: rgb(110, 52, 52);
+	background: url(../ImagesIcons/kerryparkview.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.parkName {
+	position: fixed;
+	background: black;
+	color: white;
+	font-weight: 500;
+	margin: -1.4rem 0 0 4rem;
+	padding: 0rem 0.2rem;
+	width: fit-content;
 }
 .split {
 	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.splitchild {
+	min-width: 320px;
+	flex: 1 1 50%;
 }
 .pictures {
 	text-align: center;
@@ -67,16 +137,48 @@
 .searchDeets {
 	text-align: center;
 	width: 100vw;
-	height: 10rem;
+	height: 7vh;
 	background-color: antiquewhite;
 }
-.mapResult {
+.results {
+	background: black;
+	color: white;
+}
+.filter {
+	height: 1.75rem;
+	width: 4rem;
+	margin-left: 1rem;
+	background: none;
+	border: solid white;
+	border-width: 0.05rem;
+}
+
+.mapContainer {
 	width: 100%;
-	height: 30rem;
-	background-color: aquamarine;
+	height: 85vh;
+}
+.Nav {
+	padding: 0.5rem;
+	text-align: center;
+	height: 8vh;
+}
+.logo {
+	width: 2rem;
+	height: 2rem;
+	background: url(../ImagesIcons/ChiefSeattle_grey.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.parkSlide {
+	width: 90%;
+	height: fit-content;
+	background: gray;
+	margin: 1rem;
+	padding: 1rem;
 }
 .listResult {
-	width: 100%;
-	height: 30rem;
+	height: 85vh;
 	background-color: burlywood;
+	overflow: scroll;
 }

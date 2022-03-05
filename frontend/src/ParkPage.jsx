@@ -6,9 +6,14 @@ import GenInfo from "./Components/GenInfo";
 function ParkPage() {
 	return (
 		<div className="flexb col">
-			<Nav/>
-			<div className="bannerPic">PicHere</div>
-			<GenInfo/>
+			<Nav />
+			<div>
+				<div className="bannerPic">
+					<div>pic here</div>
+				</div>
+				<div className="parkName">NAME HERE</div>
+			</div>
+			<GenInfo />
 			<div className="flexb split">
 				<div className="pictures">Picture Gallery</div>
 				<div className="specDeets">Specific Park Details</div>

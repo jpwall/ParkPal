@@ -5,7 +5,7 @@ import config
 import operator
 from configparser import ConfigParser
 
-def config(filename='../db.ini', section='parkpal'):
+def config(filename='./db.ini', section='parkpal'):
     parser = ConfigParser()
     parser.read(filename)
 
