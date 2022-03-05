@@ -20,7 +20,7 @@ export default function SearchResult() {
 	//fetching search result
 	//right now using all data
 	useEffect(() => {
-		axios.get("http://localhost:5000/parks").then(function (response) {
+		axios.get("/parks").then(function (response) {
 			console.log(response.data);
 			setData(response.data);
 		});
