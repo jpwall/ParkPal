@@ -10,7 +10,8 @@ function Nav() {
 				<Link to="/ParkPage">Park Page</Link> |{" "}
 				<Link to="/Search">Search Page</Link> |{" "}
 				<Link to="/SearchResult">Search Result Page</Link> |{" "}
-				<Link to="/login">Login</Link>
+				<Link to="/login">Login</Link> |{" "}
+				<Link to="/signup">Sign Up</Link>
 			</nav>
 		</div>
 	);
