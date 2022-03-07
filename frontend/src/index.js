@@ -7,8 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 
 import ParkPage from "./ParkPage";
-import Search from "./Search";
-import SearchResult from "./SearchResult";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import reportWebVitals from "./reportWebVitals";
