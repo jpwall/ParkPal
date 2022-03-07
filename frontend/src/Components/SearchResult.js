@@ -1,16 +1,17 @@
-import GMap from "./Components/GMap";
-import Nav from "./Components/Nav";
-import ListResult from "./Components/ListResult";
+import GMap from "./GMap";
+import Nav from "./Nav";
+import ListResult from "./ListResult";
 import { useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-import "./Styles/App.css";
-import "./Styles/BreakPoints.css";
+import "../Styles/App.css";
+import "../Styles/BreakPoints.css";
 
 export default function SearchResult() {
 	const [data, setData] = useState([]);
-	const [selected, setSelected] = useState();
+	//Make sure to remove default selected value
+	const [selected, setSelected] = useState(1);
 
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -18,7 +19,7 @@ export default function SearchResult() {
 	// console.log(data);
 
 	//fetching search result
-	//right now using all data
+	//right now it uses all park data
 	useEffect(() => {
 		axios.get("http://localhost:5000/parks").then(function (response) {
 			console.log(response.data);
@@ -39,7 +40,7 @@ export default function SearchResult() {
 			<Nav />
 			<div className="searchDeets">
 				<div className="results flexb center">
-					<div>### results for _____</div>
+					<div> {data.length} results for _____</div>
 					<button className="button filter">Filter</button>
 				</div>
 			</div>

@@ -26,6 +26,7 @@
 	display: flex;
 }
 .button {
+	cursor: pointer;
 	border: none;
 	height: 2.5rem;
 	width: 8rem;
@@ -45,8 +46,7 @@
 	justify-content: center;
 }
 .search {
-	width: 100vw;
-	height: 20rem;
+	min-height: 20rem;
 	background-color: aquamarine;
 	background: url(../ImagesIcons/kerryparkview.jpg);
 	background-position: center;
@@ -61,7 +61,14 @@
 	background: white;
 	position: relative;
 }
-
+.suggestion {
+	cursor: pointer;
+	background-color: white;
+	border: 1px solid black;
+}
+.suggestion:hover {
+	background-color: #0046ad;
+}
 .searchType {
 	border: 1px solid white;
 	background: rgba(0, 0, 0, 0.6);
@@ -79,14 +86,13 @@
 	color: white;
 }
 .enter {
-	position: fixed;
+	position: absolute;
 	background: #0046ad;
 	border: none;
 	margin: 0.3rem -8.25rem;
 	height: 2rem;
 }
 .parkWeek {
-	width: 100vw;
 	height: 20rem;
 	background-color: bisque;
 }
@@ -181,4 +187,59 @@
 	height: 85vh;
 	background-color: burlywood;
 	overflow: scroll;
+}
+.selected {
+	background: red;
+}
+#portal .container {
+	line-height: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.container .modal {
+	z-index: 1;
+	width: fit-content;
+	height: 7rem;
+	background: white;
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+	position: relative;
+	animation: animate 0.3s;
+	color: black;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+.modal button {
+	margin: 1rem;
+	position: absolute;
+	top: 7px;
+	right: 7px;
+	padding: 8px 11px;
+	background: crimson;
+	color: white;
+	font-weight: bold;
+	border: none;
+	outline: none;
+	border-radius: 2px;
+	cursor: pointer;
+}
+@keyframes animate {
+	from {
+		transform: scale(0.5);
+	}
+	to {
+		transform: scale(1);
+	}
 }

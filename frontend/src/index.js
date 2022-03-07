@@ -7,9 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 
 import ParkPage from "./ParkPage";
-import Search from "./Search";
-import SearchResult from "./SearchResult";
-import Login from "./Login"
+import Login from "./Login";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -17,9 +15,7 @@ ReactDOM.render(
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<App />} />
-				<Route path="ParkPage" element={<ParkPage />} />
-				<Route path="/Search" element={<Search />} />
-				<Route path="/SearchResult" element={<SearchResult />} />
+				<Route path="/ParkPage" element={<ParkPage />} />
 				<Route path="/login" element={<Login />} />
 			</Routes>
 		</BrowserRouter>
