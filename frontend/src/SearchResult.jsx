@@ -2,6 +2,7 @@ import GMap from "./Components/GMap";
 import Nav from "./Components/Nav";
 import ListResult from "./Components/ListResult";
 import { useLoadScript } from "@react-google-maps/api";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
@@ -10,21 +11,31 @@ import "./Styles/BreakPoints.css";
 
 export default function SearchResult() {
 	const [data, setData] = useState([]);
-	const [selected, setSelected] = useState();
+	const [selected, setSelected] = useState(0);
+	const location = useLocation();
+	const searchData = location.state;
 
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 	});
-	// console.log(data);
 
-	//fetching search result
-	//right now using all data
+	console.log("data passed from search", searchData);
+	// fetching search result
+	// right now using all data
 	useEffect(() => {
+		let searchedparks = [];
 		axios.get("/parks").then(function (response) {
 			console.log(response.data);
-			setData(response.data);
+			response.data.map((park, i) => {
+				searchData.map((passedpark) => {
+					if (passedpark.id == i) {
+						searchedparks.push(park);
+					}
+				});
+			});
+			setData(searchedparks);
 		});
-	}, []);
+	}, [searchData]);
 
 	if (!isLoaded)
 		return (
@@ -33,14 +44,22 @@ export default function SearchResult() {
 				<div className="flexb center">loading...</div>
 			</div>
 		);
-
+	else if (data.length == 0)
+		return (
+			<div className="flexb col">
+				<Nav />
+				<div className="flexb center">
+					Didn't find any results. Sorry :(
+				</div>
+			</div>
+		);
 	return (
 		<div className="flexb col">
 			<Nav />
 			<div className="searchDeets">
 				<div className="results flexb center">
-					<div>### results for _____</div>
-					<button className="button filter">Filter</button>
+					<div> Park Pal found {data.length} parks!</div>
+					{/* <button className="button filter">Filter</button> */}
 				</div>
 			</div>
 			<div className="flexb split">

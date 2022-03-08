@@ -1,14 +1,45 @@
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
+import { useEffect, useState } from "react";
 
 export default function ListResult(props) {
+	//sets state variable for selected park
+	const [selectedData, setSelectedData] = useState({});
+	useEffect(() => {
+		setSelectedData(props.parks[props.selected]);
+	}, [props.selected, props.parks]);
+
+	let FeaturePark;
+	if (selectedData === {}) {
+		FeaturePark = <div></div>;
+	} else {
+		// console.log(selectedData);
+		// FeaturePark = <div></div>;
+
+		FeaturePark = (
+			<div className="parkSlide flexb col selected">
+				<div>
+					<h3>{selectedData.name}</h3> id: {selectedData.pid}
+				</div>
+				<div>
+					Lat:{selectedData.lon} | Lon:{selectedData.lat}
+				</div>
+				<div>Hours: {selectedData.hours}</div>
+				<div>Features: {selectedData.fids}</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="listResult flexb col">
 			<div>Search Results</div>
-
-			{props.parks?.map((park) => {
+			{FeaturePark}
+			{props.parks?.map((park, i) => {
 				return (
-					<div className="parkSlide flexb col">
+					<button
+						className="parkSlide flexb col"
+						key={i}
+						onClick={() => props.setSelected(i)}>
 						<div>
 							<h3>{park.name}</h3> id: {park.pid}
 						</div>
@@ -17,7 +48,7 @@ export default function ListResult(props) {
 						</div>
 						<div>Hours: {park.hours}</div>
 						<div>Features: {park.fids}</div>
-					</div>
+					</button>
 				);
 			})}
 		</div>

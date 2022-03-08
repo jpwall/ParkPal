@@ -1,26 +1,49 @@
 import Nav from "./Components/Nav";
 import { useState } from "react";
+import ComboBox from "./Components/Autocomplete";
+import { Modal } from "./Components/Modal";
+import { useNavigate } from "react-router-dom";
 
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
 
 function Search() {
-	const [searchTerm, setSearchTerm] = useState("");
+	const [searchType, setSearchType] = useState("text");
+	const [warning, setWarning] = useState("");
+	const [searchResults, setSearchResults] = useState([]);
+	let navigate = useNavigate();
 
-	function send() {
-		//creates a new message object
-		setSearchTerm("");
+	let searcher;
+	if (searchType === "features") {
+		searcher = <div></div>;
+	} else if (searchType === "az") {
+		searcher = <div></div>;
+	} else {
+		searcher = (
+			<div>
+				<ComboBox
+					setSearchResults={setSearchResults}
+					setWarning={setWarning}
+				/>
+			</div>
+		);
 	}
-	function onKeyPress(e) {
-		console.log(e);
-		if (e.key === "Enter") {
-			send();
-		}
+
+	// console.log(searchResults);
+	// console.log(searchResults.length);
+	if (searchResults.length) {
+		console.log("nav triggered");
+		navigate("../SearchResult", { state: searchResults });
+		console.log("nav ended?");
 	}
 
 	return (
 		<div className="flexb col">
 			<Nav />
+			<div id="portal"></div>
+			{warning.length > 1 && (
+				<Modal warning={warning} setWarning={setWarning} />
+			)}
 			<div className="search">
 				<div className="flexb col center">
 					<div>
@@ -30,20 +53,24 @@ function Search() {
 						<div className="spacer">
 							<p>by</p>
 						</div>
-						<button className="button searchType">Name</button>
-						<button className="button searchType">Features</button>
-						<button className="button searchType"> A to Z</button>
+						<button
+							className="button searchType"
+							onClick={() => setSearchType("text")}>
+							Name
+						</button>
+						<button
+							className="button searchType"
+							onClick={() => setSearchType("features")}>
+							Features
+						</button>
+						<button
+							className="button searchType"
+							onClick={() => setSearchType("az")}>
+							{" "}
+							A to Z
+						</button>
 					</div>
-					<div>
-						<input
-							className="searchBar"
-							placeholder="Search"
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-							onKeyPress={onKeyPress}
-						/>
-						<button className="button enter">Search</button>
-					</div>
+					<div>{searcher}</div>
 				</div>
 			</div>
 			<div className="parkWeek">Park of the week</div>
