@@ -32,7 +32,7 @@ export default function ParkMap(props) {
 		<GoogleMap
 			zoom={12}
 			center={center}
-			mapContainerClassName="mapContainer splitchild"
+			mapContainerClassName="mapContainer"
 			options={options}
 			onLoad={onLoad}>
 			{props.parks?.map((park, i) => (

@@ -1,4 +1,4 @@
-import "./GenInfo.css";
+import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
 
 function GenInfo() {

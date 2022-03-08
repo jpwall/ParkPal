@@ -4,20 +4,21 @@ import "./index.css";
 //Router Docs at
 //https://reactrouter.com/docs/en/v6/getting-started/tutorial
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
 
+import Nav from "./Components/Nav";
 import ParkPage from "./ParkPage";
 import Search from "./Search";
 import SearchResult from "./SearchResult";
-import Login from "./Login"
-import SignUp from "./SignUp"
+import Login from "./Login";
+import SignUp from "./SignUp";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
+			<Nav />
 			<Routes>
-				<Route path="/" element={<App />} />
+				<Route path="/" element={<Search />} />
 				<Route path="ParkPage" element={<ParkPage />} />
 				<Route path="/Search" element={<Search />} />
 				<Route path="/SearchResult" element={<SearchResult />} />
