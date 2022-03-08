@@ -14,6 +14,7 @@ export default function ParkMap(props) {
 		}),
 		[]
 	);
+	//this is gonna be a problem on null
 	useEffect(
 		() =>
 			mapRef.current?.panTo({
@@ -25,16 +26,13 @@ export default function ParkMap(props) {
 	console.log("props");
 	console.log(props);
 
-	// const selLat = GMprops.parks[GMprops.selKey].lat;
-	// const selLon = GMprops.parks[GMprops.selKey].Lon;
-
 	const onLoad = useCallback((map) => (mapRef.current = map), []);
 
 	return (
 		<GoogleMap
 			zoom={12}
 			center={center}
-			mapContainerClassName="mapContainer splitchild"
+			mapContainerClassName="mapContainer"
 			options={options}
 			onLoad={onLoad}>
 			{props.parks?.map((park, i) => (

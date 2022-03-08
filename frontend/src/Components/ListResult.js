@@ -9,11 +9,13 @@ export default function ListResult(props) {
 		setSelectedData(props.parks[props.selected]);
 	}, [props.selected, props.parks]);
 
-	//controls whether to display the selected park
 	let FeaturePark;
 	if (selectedData === {}) {
 		FeaturePark = <div></div>;
 	} else {
+		// console.log(selectedData);
+		// FeaturePark = <div></div>;
+
 		FeaturePark = (
 			<div className="parkSlide flexb col selected">
 				<div>
@@ -23,16 +25,17 @@ export default function ListResult(props) {
 					Lat:{selectedData.lon} | Lon:{selectedData.lat}
 				</div>
 				<div>Hours: {selectedData.hours}</div>
-				<div>Features: {selectedData.fids}</div>
+				<div className="features">Features: {selectedData.fids}</div>
 			</div>
 		);
 	}
 
 	return (
 		<div className="listResult flexb col">
-			<div>Search Results</div>
+			<div>
+				<h2>Search Results</h2>
+			</div>
 			{FeaturePark}
-
 			{props.parks?.map((park, i) => {
 				return (
 					<button
@@ -46,7 +49,7 @@ export default function ListResult(props) {
 							Lat:{park.lat} | Lon:{park.lon}
 						</div>
 						<div>Hours: {park.hours}</div>
-						<div>Features: {park.fids}</div>
+						<div className="features">Features: {park.fids}</div>
 					</button>
 				);
 			})}

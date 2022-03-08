@@ -6,7 +6,6 @@ import GenInfo from "./Components/GenInfo";
 function ParkPage() {
 	return (
 		<div className="flexb col">
-			<Nav />
 			<div>
 				<div className="bannerPic">
 					<div>pic here</div>
