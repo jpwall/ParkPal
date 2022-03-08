@@ -7,13 +7,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Nav from "./Components/Nav";
 import ParkPage from "./ParkPage";
-<<<<<<< HEAD
-=======
-import Search from "./Search";
-import SearchResult from "./SearchResult";
->>>>>>> cato
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Search from "./Search";
+import SearchResult from "./SearchResult";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -21,15 +18,9 @@ ReactDOM.render(
 		<BrowserRouter>
 			<Nav />
 			<Routes>
-<<<<<<< HEAD
-				<Route path="/" element={<App />} />
-				<Route path="/ParkPage" element={<ParkPage />} />
-=======
 				<Route path="/" element={<Search />} />
 				<Route path="ParkPage" element={<ParkPage />} />
-				<Route path="/Search" element={<Search />} />
 				<Route path="/SearchResult" element={<SearchResult />} />
->>>>>>> cato
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
 			</Routes>
