@@ -27,13 +27,14 @@ function Login() {
 					"Origin, X-Requested-With, Content-Type, Accept",
 			},
 		})
-			.then(function (response) {
-				console.log(response);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
+		.then(function (response) {
+			console.log(response);
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 	};
+	
 	return (
 		<div className="flexb col">
 			<form onSubmit={handleSubmit}>

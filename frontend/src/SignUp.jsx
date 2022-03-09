@@ -14,6 +14,7 @@ function SignUp() {
 	const [pass, setPass] = useState("");
 	const [confirm, setConfirm] = useState("");
 	const [ishuman, setIshuman] = useState(null);
+	const [err, setErr] = useState("");
 	const captchaRef = useRef(null);
 
 	const onLoad = () => {
@@ -22,8 +23,8 @@ function SignUp() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (ishuman) {
-			if (pass == confirm) {
+		if (pass == confirm) {
+			if (ishuman) {
 				axios({
 					method: "post",
 					url: "/auth_register",
@@ -39,15 +40,22 @@ function SignUp() {
 				})
 					.then(function (response) {
 						console.log(response);
+						// response.status has status code
+						// from here, do what you gotta do to load the page
+						// response will have the JWT
 					})
-					.catch(function (error) {
-						console.log(error);
+					.catch(function (err) {
+						if (err.response.status == 409) {
+							setErr("Username already taken");
+						} else {
+							setErr("Server error: " + err)
+						}
 					});
 			} else {
-				alert("Your passwords do not match");
+				setErr("Please complete the reCAPTCHA to continue")
 			}
 		} else {
-			alert("Please complete the reCAPTCHA");
+			setErr("Your passwords do not match")
 		}
 	};
 	return (
@@ -75,14 +83,16 @@ function SignUp() {
 					id="confirm"
 					name="confirm"></input>
 				{pass == confirm ? <div>✅</div> : <div>❌</div>}
+				{ishuman === null && 
 				<HCaptcha
 					sitekey="04c36887-2836-4c0d-8467-9c13577fd631"
 					onLoad={onLoad}
 					onVerify={setIshuman}
 					ref={captchaRef}
-				/>
+				/>}
 				<input type="submit" value="Login"></input>
 			</form>
+			<div style={{color:"red"}}>{err}</div>
 		</div>
 	);
 }

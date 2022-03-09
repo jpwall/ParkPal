@@ -1,7 +1,9 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask_cors import CORS, cross_origin
 import psycopg2 as psql
+import bcrypt
 import config
 import json
 from configparser import ConfigParser
@@ -76,13 +78,45 @@ def healthcheck():
 @cross_origin()
 def login():
     request.form = json.loads(request.data)
-    return "success!"
+    user = request.form['username']
+    passwd = bytes(request.form['password'], 'UTF-8')
+    salt = bcrypt.gensalt()
+    hashed_pass = bcrypt.hashpw(passwd, salt)
+    params = config()
+    conn = psql.connect(**params)
+    db_hash = None
+    with conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT (password) FROM users WHERE username=%s", (user,))
+            res = cur.fetchone()
+            db_hash = res[0]
+    if bcrypt.checkpw(passwd, bytes(db_hash, 'UTF-8')):
+        print("{}'s HASHES match! Authorizing access...".format(user))
+        return jsonify({"status": "success", "msg": "success"}), 200
+    else:
+        print("{}'s HASHES don't match :( That's not allowed...".format(user))
+        return jsonify({"status": "unauthorized", "msg": "incorrect password"}), 401
 
 @app.route('/auth_register', methods=['POST'])
 @cross_origin()
 def register():
     request.form = json.loads(request.data)
-    return "registered"
+    user = request.form['username']
+    passwd = bytes(request.form['password'], 'UTF-8')
+    salt = bcrypt.gensalt()
+    hashed_pass = bcrypt.hashpw(passwd, salt)
+    print("{}'s Hashed Password: {}".format(user, hashed_pass))
+    try:
+        params = config()
+        conn = psql.connect(**params)
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute("INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id", (user, hashed_pass.decode('utf8')))
+                cur.fetchone()
+        conn.close()
+        return jsonify({"status": "success", "msg": "success"}), 200
+    except psql.errors.UniqueViolation:
+        return jsonify({"status": "error", "msg": "Please choose a different username"}), 409
 
 @app.route('/parks')
 def getParks():
