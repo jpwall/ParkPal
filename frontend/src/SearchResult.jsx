@@ -12,6 +12,7 @@ import "./Styles/BreakPoints.css";
 export default function SearchResult() {
 	const [data, setData] = useState([]);
 	const [selected, setSelected] = useState(0);
+
 	const location = useLocation();
 	const searchData = location.state;
 
@@ -40,14 +41,12 @@ export default function SearchResult() {
 	if (!isLoaded)
 		return (
 			<div className="flexb col">
-				<Nav />
 				<div className="flexb center">loading...</div>
 			</div>
 		);
 	else if (data.length == 0)
 		return (
 			<div className="flexb col">
-				<Nav />
 				<div className="flexb center">
 					Didn't find any results. Sorry :(
 				</div>
@@ -55,7 +54,6 @@ export default function SearchResult() {
 		);
 	return (
 		<div className="flexb col">
-			<Nav />
 			<div className="searchDeets">
 				<div className="results flexb center">
 					<div> Park Pal found {data.length} parks!</div>
@@ -63,14 +61,14 @@ export default function SearchResult() {
 				</div>
 			</div>
 			<div className="flexb split">
-				<div className="splitchild">
+				<div className="splitchild one">
 					<GMap
 						parks={[...data]}
 						selected={selected}
 						setSelected={setSelected}
 					/>
 				</div>
-				<div className="splitchild">
+				<div className="splitchild two">
 					<ListResult
 						parks={[...data]}
 						selected={selected}

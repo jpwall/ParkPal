@@ -39,7 +39,6 @@ function Search() {
 
 	return (
 		<div className="flexb col">
-			<Nav />
 			<div id="portal"></div>
 			{warning.length > 1 && (
 				<Modal warning={warning} setWarning={setWarning} />
@@ -73,7 +72,7 @@ function Search() {
 					<div>{searcher}</div>
 				</div>
 			</div>
-			<div className="parkWeek">Park of the week</div>
+			{/* <div className="parkWeek">Park of the week</div> */}
 		</div>
 	);
 }
