@@ -2,11 +2,15 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_cors import CORS, cross_origin
+from configparser import ConfigParser
+from cryptography.hazmat.primitives import serialization
 import psycopg2 as psql
 import bcrypt
 import config
 import json
-from configparser import ConfigParser
+import jwt
+
+private_key = open('.ssh/id_rsa', 'r').read()
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -84,18 +88,32 @@ def login():
     hashed_pass = bcrypt.hashpw(passwd, salt)
     params = config()
     conn = psql.connect(**params)
-    db_hash = None
+    res = None
     with conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT (password) FROM users WHERE username=%s", (user,))
+            cur.execute("SELECT password, id FROM users WHERE username=%s", (user,))
             res = cur.fetchone()
-            db_hash = res[0]
-    if bcrypt.checkpw(passwd, bytes(db_hash, 'UTF-8')):
-        print("{}'s HASHES match! Authorizing access...".format(user))
-        return jsonify({"status": "success", "msg": "success"}), 200
+    if res is not None:
+        if bcrypt.checkpw(passwd, bytes(res[0], 'UTF-8')):
+            print("{}'s HASHES match! Authorizing access...".format(user))
+            print("Creating JWT for {}".format(user))
+            payload_data = {
+                "sub": res[1],
+                "nickname": user
+            }
+            key = serialization.load_ssh_private_key(private_key.encode(), password=b'')
+            new_token = jwt.encode(
+                payload=payload_data,
+                key=key,
+                algorithm='RS256'
+            )
+            print("{} is {}'s JWT token".format(new_token, user))
+            return jsonify({"status": "success", "msg": "success", "token": new_token}), 200
+        else:
+            print("{}'s HASHES don't match :( The password provided was wrong...".format(user))
+            return jsonify({"status": "unauthorized", "msg": "incorrect password"}), 401
     else:
-        print("{}'s HASHES don't match :( That's not allowed...".format(user))
-        return jsonify({"status": "unauthorized", "msg": "incorrect password"}), 401
+        return jsonify({"status": "unauthorized", "msg": "incorrect username"}), 401
 
 @app.route('/auth_register', methods=['POST'])
 @cross_origin()

@@ -1,7 +1,9 @@
-flask==2.0.3
-flask_cors==3.0.10
-psycopg2==2.9.3
-config==0.5.1
-jwcrypto==1.0
-bcrypt==3.1.7
-jsonify==0.5
+flask>=2.0.3
+flask_cors>=3.0.10
+psycopg2>=2.9.3
+config>=0.5.1
+jwcrypto>=1.0
+bcrypt>=3.1.7
+jsonify>=0.5
+pyjwt[crypto]>=1.7.1
+cryptography>=36.0.1
