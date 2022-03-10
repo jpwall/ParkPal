@@ -8,11 +8,11 @@ function Nav() {
 			<div className="flexb center">
 				<div className="logo"></div>
 				<nav className="Nav">
-					<Link to="/ParkPage">Park Page</Link> |{" "}
-					<Link to="/Search">Search Page</Link> |{" "}
-					<Link to="/SearchResult">Search Result Page</Link> |{" "}
+					{/* <Link to="/ParkPage">Park Page</Link> |{" "} */}
+					<Link to="/Search">Search</Link>
+					{/* <Link to="/SearchResult">Search Result Page</Link> |{" "}
 					<Link to="/login">Login</Link> |{" "}
-					<Link to="/signup">Sign Up</Link>
+					<Link to="/signup">Sign Up</Link> */}
 				</nav>
 			</div>
 		</div>

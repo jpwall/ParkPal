@@ -4,6 +4,7 @@ import "./Styles/BreakPoints.css";
 import axios from "axios";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useState, useRef } from "react";
+import { Link } from 'react-router-dom';
 
 /*
 TODO: Global backend URL (this will be api.example.com in the future)
@@ -39,16 +40,18 @@ function SignUp() {
 					},
 				})
 					.then(function (response) {
-						console.log(response);
-						// response.status has status code
-						// from here, do what you gotta do to load the page
-						// response will have the JWT
+						// console.log(response);
+						// // response.status has status code
+						// // from here, do what you gotta do to load the page
+						// // response will have the JWT
+						return <Link to='/login'/>
 					})
 					.catch(function (err) {
 						if (err.response.status == 409) {
 							setErr("Username already taken");
 						} else {
 							setErr("Server error: " + err)
+							//TODO: handle empty password and empty username
 						}
 					});
 			} else {
@@ -90,9 +93,10 @@ function SignUp() {
 					onVerify={setIshuman}
 					ref={captchaRef}
 				/>}
-				<input type="submit" value="Login"></input>
+				<div style={{color:"red"}}>{err}</div>
+				<input type="submit" value="Sign Up"></input>
 			</form>
-			<div style={{color:"red"}}>{err}</div>
+			<Link to="/login">Or Log In</Link>
 		</div>
 	);
 }

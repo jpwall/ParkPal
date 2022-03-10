@@ -12,21 +12,50 @@ import SearchResult from "./SearchResult";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import reportWebVitals from "./reportWebVitals";
+import PrivateRoute from './Components/PrivateRoute';
 
 ReactDOM.render(
-	<React.StrictMode>
+	// <React.StrictMode>
 		<BrowserRouter>
 			<Nav />
 			<Routes>
-				<Route path="/" element={<Search />} />
-				<Route path="ParkPage" element={<ParkPage />} />
-				<Route path="/Search" element={<Search />} />
-				<Route path="/SearchResult" element={<SearchResult />} />
+				<Route 
+					path="/"
+					element={
+						<PrivateRoute>
+							<Search />
+						</PrivateRoute>
+					}
+				/>
+				<Route 
+					path="/ParkPage"
+					element={
+						<PrivateRoute>
+							<ParkPage />
+						</PrivateRoute>
+					}
+				/>
+				<Route 
+					path="/Search"
+					element={
+						<PrivateRoute>
+							<Search />
+						</PrivateRoute>
+					}
+				/>
+				<Route 
+					path="/SearchResult"
+					element={
+						<PrivateRoute>
+							<SearchResult />
+						</PrivateRoute>
+					}
+				/>
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
 			</Routes>
-		</BrowserRouter>
-	</React.StrictMode>,
+	 	</BrowserRouter>,
+	// </React.StrictMode>,
 	document.getElementById("root")
 );
 

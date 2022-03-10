@@ -1,3 +1,17 @@
+body {
+	background-color: aquamarine;
+	background: url(../ImagesIcons/kerryparkview2.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+    height: 100%;
+}
+
 .App {
 	text-align: center;
 }
@@ -49,11 +63,12 @@ h2 {
 }
 .search {
 	min-height: 20rem;
+	/* height:100%;
 	background-color: aquamarine;
-	background: url(../ImagesIcons/kerryparkview.jpg);
+	background: url(../ImagesIcons/kerryparkview2.jpg);
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: cover; */
 }
 .searchBar {
 	width: 25rem;

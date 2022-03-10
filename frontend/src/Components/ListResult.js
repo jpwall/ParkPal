@@ -25,7 +25,7 @@ export default function ListResult(props) {
 					Lat:{selectedData.lon} | Lon:{selectedData.lat}
 				</div>
 				<div>Hours: {selectedData.hours}</div>
-				<div className="features">Features: {selectedData.fids}</div>
+				{/*<div className="features">Features: {selectedData.fids}</div>*/}
 			</div>
 		);
 	}
@@ -49,7 +49,7 @@ export default function ListResult(props) {
 							Lat:{park.lat} | Lon:{park.lon}
 						</div>
 						<div>Hours: {park.hours}</div>
-						<div className="features">Features: {park.fids}</div>
+						{/*<div className="features">Features: {park.fids}</div>*/}
 					</button>
 				);
 			})}
