@@ -4,7 +4,7 @@ import "./Styles/BreakPoints.css";
 import axios from "axios";
 import { useState } from "react";
 import { authenticationService } from './Helpers/authentication.service.js';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { timeInterval } from "rxjs";
 
 function Login() {
@@ -28,8 +28,8 @@ function Login() {
 	};
 	
 	return (
-		<div className="flexb col">
-			<form onSubmit={handleSubmit}>
+		<div className="authContainer flexb col">
+			<form className="authBox" onSubmit={handleSubmit}>
 				<label htmlFor="username">Username:</label>
 				<input
 					value={user}
@@ -44,8 +44,11 @@ function Login() {
 					type="password"
 					id="password"
 					name="password"></input>
-				<div style={{color:"red"}}>{err}</div>
-				<input type="submit" value="Login"></input>
+				<div style={{color:"#0e0182"}}>{err}</div>
+				<div>
+					<input className="authButton" type="submit" value="Log In"></input>
+					<Link to="/signup" style={{color: "white", paddingLeft: "0.25rem"}}>Or Sign Up</Link>
+				</div>
 			</form>
 		</div>
 	);

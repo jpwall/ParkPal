@@ -121,20 +121,23 @@ def register():
     request.form = json.loads(request.data)
     user = request.form['username']
     passwd = bytes(request.form['password'], 'UTF-8')
-    salt = bcrypt.gensalt()
-    hashed_pass = bcrypt.hashpw(passwd, salt)
-    print("{}'s Hashed Password: {}".format(user, hashed_pass))
-    try:
-        params = config()
-        conn = psql.connect(**params)
-        with conn:
-            with conn.cursor() as cur:
-                cur.execute("INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id", (user, hashed_pass.decode('utf8')))
-                cur.fetchone()
-        conn.close()
-        return jsonify({"status": "success", "msg": "success"}), 200
-    except psql.errors.UniqueViolation:
-        return jsonify({"status": "error", "msg": "Please choose a different username"}), 409
+    if len(user) > 0 and len(request.form['password']) > 0:
+        salt = bcrypt.gensalt()
+        hashed_pass = bcrypt.hashpw(passwd, salt)
+        print("{}'s Hashed Password: {}".format(user, hashed_pass))
+        try:
+            params = config()
+            conn = psql.connect(**params)
+            with conn:
+                with conn.cursor() as cur:
+                    cur.execute("INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id", (user, hashed_pass.decode('utf8')))
+                    cur.fetchone()
+            conn.close()
+            return jsonify({"status": "success", "msg": "success"}), 200
+        except psql.errors.UniqueViolation:
+            return jsonify({"status": "error", "msg": "Please choose a different username"}), 409
+    else:
+        return jsonify({"status": "error", "msg": "Username or password must not be empty"}), 400
 
 @app.route('/parks')
 def getParks():

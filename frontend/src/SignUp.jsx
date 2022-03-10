@@ -4,7 +4,8 @@ import "./Styles/BreakPoints.css";
 import axios from "axios";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 /*
 TODO: Global backend URL (this will be api.example.com in the future)
@@ -17,6 +18,7 @@ function SignUp() {
 	const [ishuman, setIshuman] = useState(null);
 	const [err, setErr] = useState("");
 	const captchaRef = useRef(null);
+	let navigate = useNavigate();
 
 	const onLoad = () => {
 		captchaRef.current.execute();
@@ -44,13 +46,13 @@ function SignUp() {
 						// // response.status has status code
 						// // from here, do what you gotta do to load the page
 						// // response will have the JWT
-						return <Link to='/login'/>
+						navigate('/login')
 					})
 					.catch(function (err) {
 						if (err.response.status == 409) {
 							setErr("Username already taken");
 						} else {
-							setErr("Server error: " + err)
+							setErr(err.response.data["msg"])
 							//TODO: handle empty password and empty username
 						}
 					});
@@ -62,8 +64,8 @@ function SignUp() {
 		}
 	};
 	return (
-		<div className="flexb col">
-			<form onSubmit={handleSubmit}>
+		<div className="authContainer flexb col">
+			<form className="authBox" onSubmit={handleSubmit}>
 				<label for="username">Username:</label>
 				<input
 					value={user}
@@ -79,13 +81,16 @@ function SignUp() {
 					id="password"
 					name="password"></input>
 				<label for="confirm_pass">Confirm Password:</label>
-				<input
-					value={confirm}
-					onChange={(e) => setConfirm(e.target.value)}
-					type="password"
-					id="confirm"
-					name="confirm"></input>
-				{pass == confirm ? <div>✅</div> : <div>❌</div>}
+				<div className="pwCheck">
+					<input
+						style={{marginRight: "0.5rem", marginBottom: "0.5rem"}}
+						value={confirm}
+						onChange={(e) => setConfirm(e.target.value)}
+						type="password"
+						id="confirm"
+						name="confirm"></input>
+					{pass == confirm ? <div className="pwCheck">✅</div> : <div className="pwCheck">❌</div>}
+				</div>
 				{ishuman === null && 
 				<HCaptcha
 					sitekey="04c36887-2836-4c0d-8467-9c13577fd631"
@@ -93,10 +98,12 @@ function SignUp() {
 					onVerify={setIshuman}
 					ref={captchaRef}
 				/>}
-				<div style={{color:"red"}}>{err}</div>
-				<input type="submit" value="Sign Up"></input>
+				<div style={{color:"#ff96fb"}}>{err}</div>
+				<div>
+					<input className="authButton" id="signUp" type="submit" value="Sign Up"></input>
+					<Link to="/login" style={{color: "white"}}>Or Log In</Link>
+				</div>
 			</form>
-			<Link to="/login">Or Log In</Link>
 		</div>
 	);
 }

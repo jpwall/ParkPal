@@ -1,6 +1,7 @@
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
 import { Link } from "react-router-dom";
+import searchlogo from '../ImagesIcons/search.png';
 
 function Nav() {
 	return (
@@ -9,7 +10,7 @@ function Nav() {
 				<div className="logo"></div>
 				<nav className="Nav">
 					{/* <Link to="/ParkPage">Park Page</Link> |{" "} */}
-					<Link to="/Search">Search</Link>
+					<Link to="/Search"><img className="searchLogo" src={searchlogo}/></Link>
 					{/* <Link to="/SearchResult">Search Result Page</Link> |{" "}
 					<Link to="/login">Login</Link> |{" "}
 					<Link to="/signup">Sign Up</Link> */}
