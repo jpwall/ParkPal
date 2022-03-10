@@ -30,7 +30,7 @@ psql
 Edit the `pg_hba.conf` to use `md5` authentication instead of `peer` for `parkpal`
 ```
 psql parkpal parkpal
-=> CREATE TABLE "user"(id INTEGER PRIMARY KEY NOT NULL, username VARCHAR (255) UNIQUE NOT NULL, password VARCHAR (64) NOT NULL);
+=> CREATE TABLE "user"(id SERIAL PRIMARY KEY, username VARCHAR (255) UNIQUE NOT NULL, password VARCHAR (64) NOT NULL);
 => CREATE TABLE "feature"(fid INTEGER UNIQUE NOT NULL, name VARCHAR (35) UNIQUE NOT NULL, image VARCHAR);
 => CREATE TABLE "park"(pid INTEGER NOT NULL, name VARCHAR, fid INTEGER NOT NULL, lat FLOAT, lon FLOAT, hours VARCHAR (60), youth_only BOOLEAN, lighting BOOLEAN);
 => \d

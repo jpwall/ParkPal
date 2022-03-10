@@ -108,7 +108,7 @@ def login():
                 algorithm='RS256'
             )
             print("{} is {}'s JWT token".format(new_token, user))
-            return jsonify({"status": "success", "msg": "success", "token": new_token}), 200
+            return jsonify({"status": "success", "msg": "success", "token": str(new_token)}), 200
         else:
             print("{}'s HASHES don't match :( The password provided was wrong...".format(user))
             return jsonify({"status": "unauthorized", "msg": "incorrect password"}), 401
