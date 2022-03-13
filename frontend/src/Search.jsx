@@ -1,4 +1,3 @@
-import Nav from "./Components/Nav";
 import { useState } from "react";
 import ComboBox from "./Components/Autocomplete";
 import { Modal } from "./Components/Modal";
@@ -10,9 +9,12 @@ import "./Styles/BreakPoints.css";
 function Search() {
 	const [searchType, setSearchType] = useState("text");
 	const [warning, setWarning] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
+	const [searchResults, setSearchResults] = useState({
+		selected: 0,
+		searchResults: [],
+	});
 	let navigate = useNavigate();
-
+	console.log("search data", searchResults);
 	let searcher;
 	if (searchType === "features") {
 		searcher = <div></div>;
@@ -31,10 +33,8 @@ function Search() {
 
 	// console.log(searchResults);
 	// console.log(searchResults.length);
-	if (searchResults.length) {
-		console.log("nav triggered");
+	if (searchResults.searchResults.length) {
 		navigate("../SearchResult", { state: searchResults });
-		console.log("nav ended?");
 	}
 
 	return (
