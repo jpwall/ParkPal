@@ -5,7 +5,13 @@ import "../Styles/App.css";
 
 export default function ParkMap(props) {
 	const mapRef = useRef();
-	const center = useMemo(() => ({ lat: 47.665, lng: -122.303 }), []);
+	const center = useMemo(
+		() => ({
+			lat: props.parks[props.selected].lon,
+			lng: props.parks[props.selected].lat,
+		}),
+		[]
+	);
 	const options = useMemo(
 		() => ({
 			disableDefaultUI: true,
@@ -15,6 +21,9 @@ export default function ParkMap(props) {
 		[]
 	);
 	//this is gonna be a problem on null
+	// console.log(props.parks);
+	// console.log(props.selected);
+
 	useEffect(
 		() =>
 			mapRef.current?.panTo({
@@ -23,8 +32,8 @@ export default function ParkMap(props) {
 			}),
 		[props.selected, props.parks]
 	);
-	console.log("props");
-	console.log(props);
+	// console.log("props");
+	// console.log(props);
 
 	const onLoad = useCallback((map) => (mapRef.current = map), []);
 

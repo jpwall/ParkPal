@@ -4,15 +4,25 @@ export default function ComboBox(props) {
 	const [suggestions, setSuggestions] = useState([]);
 	const [text, setText] = useState("");
 
-	function send() {
+	function send(i) {
+		// console.log("picked:", i);
+		// console.log("length:", suggestions.length);
+		// console.log("length:", suggestions);
+
 		if (suggestions.length > 0) {
-			props.setSearchResults(suggestions);
+			props.setSearchResults({
+				selected: i,
+				searchResults: suggestions,
+			});
 		} else
 			try {
 				parkSearchList.map((park) => {
 					if (park.name == text) {
 						// console.log("foundmyself");
-						props.setSearchResults([park]);
+						props.setSearchResults({
+							selected: 0,
+							searchResults: park,
+						});
 					}
 				});
 			} catch {
@@ -25,10 +35,11 @@ export default function ComboBox(props) {
 			send();
 		}
 	}
-	const onSuggestHandler = (name) => {
+	const onSuggestHandler = (name, i) => {
 		// console.log("name", name);
-		send();
+		// console.log("i", i);
 		setText(name);
+		send(i);
 	};
 	const onChangeHandler = (text) => {
 		let matches = [];
@@ -66,7 +77,7 @@ export default function ComboBox(props) {
 					<div
 						key={i}
 						className="suggestion"
-						onClick={() => onSuggestHandler(suggestion.name)}>
+						onClick={() => onSuggestHandler(suggestion.name, i)}>
 						{suggestion.name}
 					</div>
 				))}

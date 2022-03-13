@@ -1,11 +1,10 @@
-import Nav from "./Components/Nav";
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
 import axios from "axios";
 import { useState } from "react";
-import { authenticationService } from './Helpers/authentication.service.js';
-import { Link, useNavigate } from 'react-router-dom'
-import { timeInterval } from "rxjs";
+import { authenticationService } from "./Helpers/authentication.service.js";
+import { Link, useNavigate } from "react-router-dom";
+// import { timeInterval } from "rxjs";
 
 function Login() {
 	const [user, setUser] = useState("");
@@ -15,18 +14,17 @@ function Login() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		authenticationService.login(user, pass)
-			.then(
-				user => {
-					navigate('/')
-				},
-				error => {
-					setErr(error)
-					console.log(error)
-				}
-			)
+		authenticationService.login(user, pass).then(
+			(user) => {
+				navigate("/");
+			},
+			(error) => {
+				setErr(error);
+				console.log(error);
+			}
+		);
 	};
-	
+
 	return (
 		<div className="authContainer flexb col">
 			<form className="authBox" onSubmit={handleSubmit}>
@@ -44,10 +42,17 @@ function Login() {
 					type="password"
 					id="password"
 					name="password"></input>
-				<div style={{color:"#0e0182"}}>{err}</div>
+				<div style={{ color: "#0e0182" }}>{err}</div>
 				<div>
-					<input className="authButton" type="submit" value="Log In"></input>
-					<Link to="/signup" style={{color: "white", paddingLeft: "0.25rem"}}>Or Sign Up</Link>
+					<input
+						className="authButton"
+						type="submit"
+						value="Log In"></input>
+					<Link
+						to="/signup"
+						style={{ color: "white", paddingLeft: "0.25rem" }}>
+						Or Sign Up
+					</Link>
 				</div>
 			</form>
 		</div>

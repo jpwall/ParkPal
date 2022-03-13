@@ -1,5 +1,4 @@
 import GMap from "./Components/GMap";
-import Nav from "./Components/Nav";
 import ListResult from "./Components/ListResult";
 import { useLoadScript } from "@react-google-maps/api";
 import { useLocation } from "react-router-dom";
@@ -14,19 +13,23 @@ export default function SearchResult() {
 	const [selected, setSelected] = useState(0);
 
 	const location = useLocation();
-	const searchData = location.state;
+	console.log("raw data passed in search", location.state);
+
+	const searchData = location.state.searchResults;
+	const searchSel = location.state.selected;
 
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 	});
 
-	console.log("data passed from search", searchData);
+	console.log("transformed data", searchData);
+
 	// fetching search result
 	// right now using all data
 	useEffect(() => {
 		let searchedparks = [];
 		axios.get("/parks").then(function (response) {
-			console.log(response.data);
+			// console.log(response.data);
 			response.data.map((park, i) => {
 				searchData.map((passedpark) => {
 					if (passedpark.id == i) {
@@ -35,6 +38,7 @@ export default function SearchResult() {
 				});
 			});
 			setData(searchedparks);
+			setSelected(searchSel);
 		});
 	}, [searchData]);
 
@@ -54,11 +58,9 @@ export default function SearchResult() {
 		);
 	return (
 		<div className="flexb col">
-			<div className="searchDeets">
-				<div className="results flexb center">
-					<div> Park Pal found {data.length} parks!</div>
-					{/* <button className="button filter">Filter</button> */}
-				</div>
+			<div className="results flexb center">
+				<div> Park Pal found {data.length} parks!</div>
+				{/* <button className="button filter">Filter</button> */}
 			</div>
 			<div className="flexb split">
 				<div className="splitchild one">

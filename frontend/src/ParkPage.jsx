@@ -1,7 +1,5 @@
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
-
-import Nav from "./Components/Nav";
 import GenInfo from "./Components/GenInfo";
 function ParkPage() {
 	return (
