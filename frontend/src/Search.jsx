@@ -9,6 +9,16 @@ import axios from "axios";
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
 
+// matches.map((park) => {
+// 	park.fids.map((fid) => {
+// 		props.allFeatures.map((feature) => {
+// 			if (feature.fid == fid) {
+// 				fid = feature.name;
+// 			}
+// 		});
+// 	});
+// });
+
 function Search() {
 	//variable for buttons to change which controlles which search type is shown
 	const [searchType, setSearchType] = useState("text");
@@ -24,12 +34,17 @@ function Search() {
 	//from router package that sends data to Search Result
 	let navigate = useNavigate();
 	const [allParks, setAllParks] = useState([]);
+	const [allFeatures, setAllFeatures] = useState([]);
 
 	//Onload gets a list off all the parks from the backend
 	useEffect(() => {
 		axios.get("/parks").then(function (response) {
 			// console.log("pure response", response.data);
 			setAllParks(response.data);
+		});
+		axios.get("/features").then(function (response) {
+			// console.log("pure response", response.data);
+			setAllFeatures(response.data);
 		});
 	}, []);
 
@@ -38,7 +53,12 @@ function Search() {
 	if (searchType === "features") {
 		searcher = (
 			<div>
-				<SearchFeature />
+				<SearchFeature
+					allFeatures={allFeatures}
+					allParks={allParks}
+					setSearchResults={setSearchResults}
+					setWarning={setWarning}
+				/>
 			</div>
 		);
 	} else if (searchType === "az") {

@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 export default function SearchName(props) {
-	// console.log(props);
+	//list of matched parks
 	const [suggestions, setSuggestions] = useState([]);
+	//text input of user
 	const [text, setText] = useState("");
 
 	function send(index) {
