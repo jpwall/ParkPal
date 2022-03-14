@@ -1,10 +1,11 @@
+//other Components
 import GMap from "./Components/GMap";
 import ListResult from "./Components/ListResult";
+//libraries & functions
 import { useLoadScript } from "@react-google-maps/api";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-
+//styles
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
 
@@ -24,22 +25,9 @@ export default function SearchResult() {
 
 	console.log("transformed data", searchData);
 
-	// fetching search result
-	// right now using all data
 	useEffect(() => {
-		let searchedparks = [];
-		axios.get("/parks").then(function (response) {
-			// console.log(response.data);
-			response.data.map((park, i) => {
-				searchData.map((passedpark) => {
-					if (passedpark.id == i) {
-						searchedparks.push(park);
-					}
-				});
-			});
-			setData(searchedparks);
-			setSelected(searchSel);
-		});
+		setData(searchData);
+		setSelected(searchSel);
 	}, [searchData]);
 
 	if (!isLoaded)

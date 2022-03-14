@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
 
-export default function FeatureSearch(props) {
+export default function SearchFeature(props) {
 	//all the feature avaliable to search from
 	const featureList = [{ name: 1 }, { name: 2 }, { name: 3 }];
 
