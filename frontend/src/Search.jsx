@@ -1,5 +1,7 @@
+import NameSearch from "./Components/AutoComplete";
+import FeatureSearch from "./Components/FeatureSearch";
+
 import { useState } from "react";
-import ComboBox from "./Components/Autocomplete";
 import { Modal } from "./Components/Modal";
 import { useNavigate } from "react-router-dom";
 
@@ -14,16 +16,24 @@ function Search() {
 		searchResults: [],
 	});
 	let navigate = useNavigate();
-	console.log("search data", searchResults);
+	// console.log("search data", searchResults);
 	let searcher;
 	if (searchType === "features") {
-		searcher = <div></div>;
+		searcher = (
+			<div>
+				<FeatureSearch />
+			</div>
+		);
 	} else if (searchType === "az") {
-		searcher = <div></div>;
+		searcher = (
+			<div style={{ color: "white" }}>
+				Underconstruction, please try again later.
+			</div>
+		);
 	} else {
 		searcher = (
 			<div>
-				<ComboBox
+				<NameSearch
 					setSearchResults={setSearchResults}
 					setWarning={setWarning}
 				/>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ComboBox(props) {
+export default function NameSearch(props) {
 	const [suggestions, setSuggestions] = useState([]);
 	const [text, setText] = useState("");
 
