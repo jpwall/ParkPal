@@ -346,7 +346,6 @@ h2 {
 	cursor: pointer;
 	border: solid white;
 	border-width: 0.1rem;
-	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	overflow-wrap: break-word;
 	overflow: hidden;
 }
@@ -356,9 +355,11 @@ h2 {
 }
 .poolFeature {
 	background: rgba(0, 0, 0, 0.6);
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .pickedBox {
+	animation: animate 0.3s;
 	flex-wrap: wrap;
 	margin: 1rem;
 }
