@@ -3,8 +3,9 @@ import { useState } from "react";
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
 
+import Renamer from "./Renamer";
 export default function SearchFeature(props) {
-	console.log(props);
+	// console.log(props);
 
 	//all the feature avaliable to search from
 	const featureList = props.allFeatures;
@@ -13,8 +14,6 @@ export default function SearchFeature(props) {
 	const [picked, setPicked] = useState([]);
 	//the list of all the features
 	const [pool, setPool] = useState(featureList);
-	//list of matched parks
-	const [suggestions, setSuggestions] = useState([]);
 
 	//handles the event when user clicks a item in pool
 	const handleRemovePool = (feature) => {
@@ -31,11 +30,13 @@ export default function SearchFeature(props) {
 
 	//submits a search for all the features the user picked
 	function send() {
+		//list of matched parks
 		let matches = [];
 
+		//if user picked features
 		if (picked.length) {
-			//if features are picked
-			let wantedfids = []; //make an array with every fid from picked
+			//make an array with every fid from picked
+			let wantedfids = [];
 			picked.map((feature) => {
 				wantedfids.push(feature.fid);
 			});
@@ -51,29 +52,11 @@ export default function SearchFeature(props) {
 					matches.push(park);
 				}
 			});
-			console.log("matches", matches);
 
 			//if we get matches
 			if (matches.length) {
-				//for each match
-				matches.map((park) => {
-					//get each fid
-					park.fids.map((fid, i) => {
-						let newname = "";
-						//compare against allFeatures
-						props.allFeatures.map((feature) => {
-							//if match
-							if (feature.fid == fid) {
-								newname = feature.name; //replace number with name
-							}
-						});
-						park.fids[i] = newname;
-					});
-					return park;
-				});
-				console.log("new matches", matches);
-				//end of horror
-
+				//Rename and clean features
+				matches = Renamer(matches, props.allFeatures);
 				props.setSearchResults({
 					selected: 0,
 					searchResults: matches,
