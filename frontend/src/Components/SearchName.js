@@ -66,7 +66,7 @@ export default function SearchName(props) {
 					}, 500);
 				}}
 			/>
-			<button className="button enter" onClick={() => send()}>
+			<button className="button enter name" onClick={() => send()}>
 				Search
 			</button>
 			{suggestions &&

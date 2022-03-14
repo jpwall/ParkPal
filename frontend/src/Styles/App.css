@@ -113,11 +113,13 @@ h2 {
 	color: white;
 }
 .enter {
-	position: absolute;
 	background: #0046ad;
 	border: none;
-	margin: 0.3rem -8.25rem;
 	height: 2rem;
+}
+.name {
+	position: absolute;
+	margin: 0.3rem -8.25rem;
 }
 .parkWeek {
 	height: 20rem;
@@ -240,7 +242,6 @@ h2 {
 	margin-left: 1rem;
 }
 #portal .container {
-	line-height: 0;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -252,11 +253,14 @@ h2 {
 	justify-content: center;
 	background: rgba(0, 0, 0, 0.7);
 }
-
+.warning {
+	font-size: 125%;
+	font-weight: 500;
+}
 .container .modal {
 	z-index: 1;
 	width: fit-content;
-	height: 7rem;
+	height: fit-content;
 	background: white;
 	padding: 1rem;
 	display: flex;
@@ -270,7 +274,6 @@ h2 {
 	justify-content: flex-end;
 }
 .modal button {
-	margin: 1rem;
 	position: absolute;
 	top: 7px;
 	right: 7px;
@@ -327,4 +330,39 @@ h2 {
 .pwCheck {
 	display: flex;
 	flex-direction: row;
+}
+.featureTitle {
+	color: white;
+	font-size: 140%;
+	font-weight: 400;
+	margin-bottom: -1rem;
+}
+.featureItem {
+	font-size: 60%;
+	width: 3.4rem;
+	height: 3.4rem;
+	color: white;
+	margin: 0.3rem;
+	cursor: pointer;
+	border: solid white;
+	border-width: 0.1rem;
+	overflow-wrap: break-word;
+	overflow: hidden;
+}
+.poolBox {
+	flex-wrap: wrap;
+	margin: 1rem;
+}
+.poolFeature {
+	background: rgba(0, 0, 0, 0.6);
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.pickedBox {
+	animation: animate 0.3s;
+	flex-wrap: wrap;
+	margin: 1rem;
+}
+.pickedFeature {
+	background: #0072be;
 }

@@ -21,9 +21,7 @@ export const Modal = ({ warning, setWarning }) => {
 				<div>
 					<h2>Error: </h2>
 				</div>
-				<div>
-					<h3> {warning}</h3>
-				</div>
+				<div className="warning">{warning}</div>
 			</div>
 		</div>,
 		document.getElementById("portal")

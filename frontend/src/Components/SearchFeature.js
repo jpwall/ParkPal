@@ -68,43 +68,43 @@ export default function SearchFeature(props) {
 			props.setWarning(`Please select some features`);
 		}
 	}
-
+	let pickedfeaturebox;
+	if (picked.length) {
+		console.log(picked.length);
+		pickedfeaturebox = (
+			<div className="flexb col center">
+				<div className="featureTitle">Picked Features</div>
+				<div className="flexb pickedBox">
+					{picked.map((feature) => (
+						<div
+							className="pickedFeature featureItem"
+							name={feature.name}
+							key={feature.name}
+							onClick={() => handleRemovePicked(feature)}>
+							{feature.name}
+						</div>
+					))}
+				</div>
+				<div>
+					<button className="button enter" onClick={() => send()}>
+						Search
+					</button>
+				</div>
+			</div>
+		);
+	}
 	//returned html
 	return (
-		<div>
-			<button className="button enter" onClick={() => send()}>
-				Search
-			</button>
-			<div className="picked">
-				{picked.map((feature) => (
-					<div
-						className="pickedFeature"
-						name={feature.name}
-						key={feature.name}
-						onClick={() => handleRemovePicked(feature)}
-						style={{
-							color: "white",
-							border: "solid gray",
-							margin: "0.3rem",
-							cursor: "pointer",
-						}}>
-						{feature.name} Picked!
-					</div>
-				))}
-			</div>
-			<div className="pool">
+		<div className="flexb col center">
+			{pickedfeaturebox}
+			<div className="featureTitle">Feature List</div>
+			<div className="flexb poolBox">
 				{pool.map((feature) => (
 					<div
-						className="poolFeature"
+						className="poolFeature featureItem"
 						key={feature.name}
 						name={feature.name}
-						onClick={() => handleRemovePool(feature)}
-						style={{
-							color: "white",
-							border: "solid gray",
-							margin: "0.3rem",
-							cursor: "pointer",
-						}}>
+						onClick={() => handleRemovePool(feature)}>
 						{feature.name}
 					</div>
 				))}
