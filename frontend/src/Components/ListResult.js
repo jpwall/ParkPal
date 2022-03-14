@@ -1,6 +1,6 @@
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
-import ParkResult from "./ParkResult";
+import ParkSlides from "./ParkSlides";
 
 export default function ListResult(props) {
 	return (
@@ -10,7 +10,7 @@ export default function ListResult(props) {
 			</div>
 			{props.parks?.map((park, index) => {
 				return (
-					<ParkResult
+					<ParkSlides
 						sortie={index}
 						{...park}
 						selected={index == props.selected}

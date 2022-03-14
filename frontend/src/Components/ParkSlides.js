@@ -1,6 +1,6 @@
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
-export default function propsResult(props) {
+export default function ParkSlides(props) {
 	// console.log(props);
 	if (props.selected) {
 		return (
