@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Renamer from "./Renamer";
+
 export default function SearchName(props) {
 	//list of matched parks
 	const [suggestions, setSuggestions] = useState([]);
@@ -8,14 +10,16 @@ export default function SearchName(props) {
 
 	function send(index) {
 		if (suggestions.length > 0) {
+			let matches = Renamer(suggestions, props.allFeatures);
 			props.setSearchResults({
 				selected: index,
-				searchResults: suggestions,
+				searchResults: matches,
 			});
 		} else
 			try {
 				props.allParks.map((park) => {
 					if (park.name == text) {
+						let matches = Renamer(park, props.allFeatures);
 						// console.log("foundmyself");
 						props.setSearchResults({
 							selected: 0,

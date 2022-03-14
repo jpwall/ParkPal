@@ -9,16 +9,6 @@ import axios from "axios";
 import "./Styles/App.css";
 import "./Styles/BreakPoints.css";
 
-// matches.map((park) => {
-// 	park.fids.map((fid) => {
-// 		props.allFeatures.map((feature) => {
-// 			if (feature.fid == fid) {
-// 				fid = feature.name;
-// 			}
-// 		});
-// 	});
-// });
-
 function Search() {
 	//variable for buttons to change which controlles which search type is shown
 	const [searchType, setSearchType] = useState("text");
@@ -71,6 +61,7 @@ function Search() {
 		searcher = (
 			<div>
 				<SearchName
+					allFeatures={allFeatures}
 					allParks={allParks}
 					setSearchResults={setSearchResults}
 					setWarning={setWarning}
