@@ -4,13 +4,16 @@ from flask import jsonify
 from flask_cors import CORS, cross_origin
 from configparser import ConfigParser
 from cryptography.hazmat.primitives import serialization
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
 import psycopg2 as psql
 import bcrypt
 import config
 import json
 import jwt
 
-private_key = open('.ssh/id_rsa', 'r').read()
+private_key = open('.cert/privatekey.pem', 'r').read()
+public_key = open('.cert/publickey.cer', 'r').read()
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -101,10 +104,9 @@ def login():
                 "sub": res[1],
                 "nickname": user
             }
-            key = serialization.load_ssh_private_key(private_key.encode(), password=b'')
             new_token = jwt.encode(
                 payload=payload_data,
-                key=key,
+                key=private_key,
                 algorithm='RS256'
             )
             print("{} is {}'s JWT token".format(new_token, user))
@@ -138,6 +140,83 @@ def register():
             return jsonify({"status": "error", "msg": "Please choose a different username"}), 409
     else:
         return jsonify({"status": "error", "msg": "Username or password must not be empty"}), 400
+
+@app.route('/auth_editnote', methods=['POST'])
+@cross_origin()
+def editNote():
+    request.form = json.loads(request.data)
+    note = request.form['note']
+    park = request.form['pid']
+    raw_jwt = request.headers.get('Authorization')
+    if raw_jwt[0:7] == "Bearer ":
+        raw_jwt = raw_jwt[7:]
+        print(raw_jwt)
+        jwt_options = {
+            'verify_signature': True,
+            'verify_exp': True,
+            'verify_nbf': False,
+            'verify_iat': True,
+            'verify_aud': False
+        }
+        jwt_data = jwt.decode(options=jwt_options, jwt=raw_jwt, key=public_key, algorithms=['RS256', ])
+        print("JWT: {}".format(jwt_data))
+        print("note: {}".format(note))
+        print("park: {}".format(park))
+        #try:
+        params = config()
+        conn = psql.connect(**params)
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT * FROM notes WHERE uid = %s AND pid = %s",
+                    (jwt_data["sub"], park))
+                existing = cur.fetchone()
+                if existing == None:
+                    cur.execute("INSERT INTO notes (uid, pid, note) VALUES (%s, %s, %s)",
+                        (jwt_data["sub"], park, note))
+                else:
+                    cur.execute("UPDATE notes SET note = %s WHERE uid = %s AND pid = %s",
+                        (note, jwt_data["sub"], park))
+        return jsonify({"status": "success", "msg": "Note saved"}), 200
+        #except:
+        #    return jsonify({"status": "failure", "msg": "Error saving note"}), 500
+    else:
+        return jsonify({"status": "error", "msg": "Invalid token"}), 400
+
+@app.route('/auth_getnote', methods=['POST'])
+@cross_origin()
+def getNote():
+    request.form = json.loads(request.data)
+    park = request.form['pid']
+    raw_jwt = request.headers.get('Authorization')
+    if raw_jwt[0:7] == "Bearer ":
+        raw_jwt = raw_jwt[7:]
+        print(raw_jwt)
+        jwt_options = {
+            'verify_signature': True,
+            'verify_exp': True,
+            'verify_nbf': False,
+            'verify_iat': True,
+            'verify_aud': False
+        }
+        jwt_data = jwt.decode(options=jwt_options, jwt=raw_jwt, key=public_key, algorithms=['RS256', ])
+        try:
+            params = config()
+            conn = psql.connect(**params)
+            note = None
+            with conn:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT * FROM notes WHERE uid = %s AND pid = %s",
+                        (jwt_data["sub"], park))
+                    note = cur.fetchone()
+            conn.close()
+            if note != None:
+                return jsonify({"status": "success", "msg": "Note retrieved", "note": note[2]}), 200
+            else:
+                return jsonify({"status": "success", "msg": "Note retrieved", "note": ""}), 200
+        except:
+            return jsonify({"status": "success", "msg": "Note not retrieved", "note": "Error retrieving note"}), 500
+    else:
+        return jsonify({"status": "error", "msg": "Invalid token"}), 400
 
 @app.route('/parks')
 def getParks():

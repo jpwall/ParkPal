@@ -96,7 +96,6 @@ export default function SearchFeature(props) {
 	//returned html
 	return (
 		<div className="flexb col center">
-			{pickedfeaturebox}
 			<div className="featureTitle">Feature List</div>
 			<div className="flexb poolBox">
 				{pool.map((feature) => (
@@ -109,6 +108,7 @@ export default function SearchFeature(props) {
 					</div>
 				))}
 			</div>
+			{pickedfeaturebox}
 		</div>
 	);
 }

@@ -1,18 +1,25 @@
 import "../Styles/App.css";
 import "../Styles/BreakPoints.css";
+import Note from "./Note";
 export default function ParkSlides(props) {
 	// console.log(props);
 	if (props.selected) {
 		return (
 			<button className="parkSlide flexb col selected">
 				<div>
-					<h3>{props.name}</h3> id: {props.pid}
+					<h3>{props.name}</h3>
 				</div>
-				<div>
-					Lat:{props.lon} | Lon:{props.lat}
-				</div>
-				<div>Hours: {props.hours}</div>
-				<div className="features">Features: {props.fids}</div>
+				<div><b>Hours:</b> {props.hours}</div>
+				<b>Features:</b>
+				<ul className="features">
+					{props.fids?.map((fid, index) => {
+						return (
+							<li>{fid}</li>
+						)
+					})}
+				</ul>
+				<b>Notes:</b>
+				<Note park={props.pid} />
 			</button>
 		);
 	} else {
@@ -21,13 +28,9 @@ export default function ParkSlides(props) {
 				className="parkSlide flexb col"
 				onClick={() => props.setSelected(props.sortie)}>
 				<div>
-					<h3>{props.name}</h3> id: {props.pid}
+					<h3>{props.name}</h3>
 				</div>
-				<div>
-					Lat:{props.lon} | Lon:{props.lat}
-				</div>
-				<div>Hours: {props.hours}</div>
-				<div className="features">Features: {props.fids}</div>
+				<div><b>Hours:</b> {props.hours}</div>
 			</button>
 		);
 	}

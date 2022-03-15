@@ -33,15 +33,21 @@ psql parkpal parkpal
 => CREATE TABLE "users"(id SERIAL PRIMARY KEY, username VARCHAR (255) UNIQUE NOT NULL, password VARCHAR (64) NOT NULL);
 => CREATE TABLE "feature"(fid INTEGER UNIQUE NOT NULL, name VARCHAR (35) UNIQUE NOT NULL, image VARCHAR);
 => CREATE TABLE "park"(pid INTEGER NOT NULL, name VARCHAR, fid INTEGER NOT NULL, lat FLOAT, lon FLOAT, hours VARCHAR (60), youth_only BOOLEAN, lighting BOOLEAN);
+=> CREATE TABLE "notes"(pid INTEGER, uid INTEGER, note VARCHAR);
 => \d
 ```
-We should now see that there is a `user`, `feature`, and `park` table!
+We should now see that there are `user`, `feature`, `park`, and `notes` tables!
 
 ## Python Setup
 
 Install all the packages
 ```
-pip install flask flask_cors psycopg2 config
+pip install flask flask_cors psycopg2 config jwcrypto bcrypt jsonify pyjwt[crypto] cryptography
+```
+
+You might need to update the `cryptography` package like so:
+```
+pip install --upgrade cryptography
 ```
 
 ## Data Integration
